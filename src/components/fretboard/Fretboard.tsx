@@ -78,7 +78,7 @@ const Fretboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start w-full max-w-screen-md mx-auto px-4 pt-24">
+    <div className="flex flex-col items-center justify-start w-full max-w-screen-md mx-auto px-4 pt-4">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">ギター指板練習</h2>
         <p className="text-gray-600">ギター指板上の音符を覚えましょう</p>

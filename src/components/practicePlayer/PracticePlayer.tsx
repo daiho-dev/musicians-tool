@@ -140,7 +140,7 @@ const PracticePlayer: React.FC = () => {
   }, [audioUrl]);
 
   return (
-    <div className="flex flex-col items-center justify-start max-w-screen-md mx-auto w-full py-4 pt-24">
+    <div className="flex flex-col items-center justify-start max-w-screen-md mx-auto w-full py-4 pt-4">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">練習ツール</h2>
         <p className="text-gray-600">音声ファイルをアップロードして再生速度を調整</p>

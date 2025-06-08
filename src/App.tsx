@@ -36,7 +36,7 @@ function App() {
       <div className="flex flex-col min-h-screen bg-slate-50">
         <Header />
         
-        <main className="flex-grow flex flex-col w-full max-w-screen-xl mx-auto p-4 sm:p-6 pt-[112px] pb-24">
+        <main className="flex-grow flex flex-col w-full max-w-screen-xl mx-auto p-4 sm:p-6 pt-16 pb-24">
           {renderContent()}
         </main>
         

@@ -144,7 +144,7 @@ const Metronome: React.FC = () => {
   }, [tapTimes]);
 
   return (
-    <div className="flex flex-col items-center justify-start w-full max-w-md mx-auto py-4 pt-24">
+    <div className="flex flex-col items-center justify-start w-full max-w-md mx-auto py-4 pt-4">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">メトロノーム</h2>
         <p className="text-gray-600">テンポと拍子を設定してください</p>
@@ -156,7 +156,7 @@ const Metronome: React.FC = () => {
         beatsPerMeasure={timeSignature.beats} 
       />
       
-      <div className="w-full max-w-screen-md mx-auto px-4 pt-24">
+      <div className="w-full max-w-screen-md mx-auto px-4 pt-6">
         <div className="flex justify-between items-center mb-2">
           <label htmlFor="bpm-slider" className="text-gray-700 font-medium">
             テンポ: <span className="text-blue-600 font-bold">{bpm} BPM</span>
