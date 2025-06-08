@@ -6,12 +6,12 @@ type Props = {
 };
 
 const strings = [
-  { name: '1st (E4)', key: 'E4' },
-  { name: '2nd (B3)', key: 'B3' },
-  { name: '3rd (G3)', key: 'G3' },
-  { name: '4th (D3)', key: 'D3' },
-  { name: '5th (A2)', key: 'A2' },
-  { name: '6th (E2)', key: 'E2' },
+  { name: '1弦 (E4)', key: 'E4' },
+  { name: '2弦 (B3)', key: 'B3' },
+  { name: '3弦 (G3)', key: 'G3' },
+  { name: '4弦 (D3)', key: 'D3' },
+  { name: '5弦 (A2)', key: 'A2' },
+  { name: '6弦 (E2)', key: 'E2' },
 ];
 
 const GuitarStrings: React.FC<Props> = ({ onSelectString, selectedString }) => {

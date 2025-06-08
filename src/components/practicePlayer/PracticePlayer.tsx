@@ -142,8 +142,8 @@ const PracticePlayer: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-start max-w-screen-md mx-auto w-full py-4 pt-24">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Practice Tool</h2>
-        <p className="text-gray-600">Upload audio and adjust playback speed</p>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">練習ツール</h2>
+        <p className="text-gray-600">音声ファイルをアップロードして再生速度を調整</p>
       </div>
       
       {/* Audio element */}
@@ -158,9 +158,9 @@ const PracticePlayer: React.FC = () => {
       {!audioFile && (
         <div className="w-full bg-white rounded-lg border-2 border-dashed border-gray-300 p-6 mb-6 text-center">
           <Upload className="w-12 h-12 mx-auto text-gray-400 mb-2" />
-          <p className="text-gray-600 mb-4">Upload MP3 or WAV file</p>
+          <p className="text-gray-600 mb-4">MP3またはWAVファイルをアップロード</p>
           <label className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-colors">
-            Choose File
+            ファイルを選択
             <input 
               type="file" 
               accept=".mp3,.wav" 
@@ -241,7 +241,7 @@ const PracticePlayer: React.FC = () => {
           {/* File upload button for changing file */}
           <div className="mt-6 text-center">
             <label className="inline-block px-3 py-1.5 bg-gray-200 text-gray-700 text-sm rounded cursor-pointer hover:bg-gray-300 transition-colors">
-              Change File
+              ファイルを変更
               <input 
                 type="file" 
                 accept=".mp3,.wav" 
@@ -255,13 +255,13 @@ const PracticePlayer: React.FC = () => {
       
       {/* Instructions */}
       <div className="w-full bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-700">
-        <h3 className="font-medium mb-2">Features:</h3>
+        <h3 className="font-medium mb-2">機能:</h3>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Upload MP3 or WAV files</li>
-          <li>Adjust playback speed from 0.5x to 2.0x</li>
-          <li>Loop sections for repeated practice</li>
-          <li>Pitch is maintained when changing speed</li>
-          <li>Reset to beginning with one click</li>
+          <li>MP3またはWAVファイルのアップロード</li>
+          <li>0.5倍から2.0倍まで再生速度を調整</li>
+          <li>繰り返し練習のためのループ機能</li>
+          <li>速度変更時もピッチを維持</li>
+          <li>ワンクリックで最初に戻る</li>
         </ul>
       </div>
     </div>

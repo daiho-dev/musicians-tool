@@ -136,8 +136,8 @@ const Tuner: React.FC = () => {
   return (
     <div className="flex flex-col justify-start w-full max-w-screen-lg mx-auto px-6 pt-24">
       <div className="text-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800 mb-1">Guitar Tuner</h2>
-        <p className="text-sm text-gray-600">Tune your instrument to standard guitar tuning</p>
+        <h2 className="text-xl font-bold text-gray-800 mb-1">ギターチューナー</h2>
+        <p className="text-sm text-gray-600">楽器を標準的なギターチューニングに合わせましょう</p>
       </div>
     <div className="mb-4">
       <TunerDisplay 
@@ -164,12 +164,12 @@ const Tuner: React.FC = () => {
           {isListening ? (
             <>
               <MicOff className="w-5 h-5 mr-2" />
-              Stop Listening
+              停止
             </>
           ) : (
             <>
               <Mic className="w-5 h-5 mr-2" />
-              Start Listening
+              開始
             </>
           )}
         </button>

@@ -80,8 +80,8 @@ const Fretboard: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-screen-md mx-auto px-4 pt-24">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Guitar Fretboard Trainer</h2>
-        <p className="text-gray-600">Learn the notes on the guitar fretboard</p>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">ギター指板練習</h2>
+        <p className="text-gray-600">ギター指板上の音符を覚えましょう</p>
       </div>
       
       {/* Selected note display */}
@@ -93,12 +93,12 @@ const Fretboard: React.FC = () => {
               <span className="text-xl text-gray-500">{selectedNote.note.slice(-1)}</span>
             </div>
             <div className="text-gray-600">
-              String {selectedNote.string}, Fret {selectedNote.fret}
+              {selectedNote.string}弦, {selectedNote.fret}フレット
             </div>
           </>
         ) : (
           <div className="text-gray-500">
-            Click on the fretboard to see note information
+            指板をクリックして音符情報を表示
           </div>
         )}
       </div>
@@ -174,12 +174,12 @@ const Fretboard: React.FC = () => {
           {showNotes ? (
             <>
               <EyeOff className="w-5 h-5 mr-2" />
-              Hide Notes
+              音符を隠す
             </>
           ) : (
             <>
               <Eye className="w-5 h-5 mr-2" />
-              Show Notes
+              音符を表示
             </>
           )}
         </button>
@@ -187,12 +187,12 @@ const Fretboard: React.FC = () => {
       
       {/* Instructions */}
       <div className="w-full bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-700">
-        <h3 className="font-medium mb-2">How to use:</h3>
+        <h3 className="font-medium mb-2">使い方:</h3>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Click on any position on the fretboard to see the note name</li>
-          <li>Use the "Show Notes" button to display all notes on the fretboard</li>
-          <li>Each click will play the sound of the selected note</li>
-          <li>Practice regularly to memorize the entire fretboard</li>
+          <li>指板上の任意の位置をクリックして音符名を確認</li>
+          <li>「音符を表示」ボタンで指板上のすべての音符を表示</li>
+          <li>クリックするたびに選択した音符の音が再生されます</li>
+          <li>定期的に練習して指板全体を覚えましょう</li>
         </ul>
       </div>
     </div>

@@ -18,7 +18,7 @@ const TimeSignatureSelector: React.FC<TimeSignatureSelectorProps> = ({
 
   return (
     <div className="w-full">
-      <label className="block text-gray-700 font-medium mb-2">Time Signature</label>
+      <label className="block text-gray-700 font-medium mb-2">拍子記号</label>
       <div className="grid grid-cols-4 gap-2">
         {commonSignatures.map((sig) => (
           <button
@@ -37,7 +37,7 @@ const TimeSignatureSelector: React.FC<TimeSignatureSelectorProps> = ({
       
       <div className="mt-4 grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-gray-700 text-sm mb-1">Beats per measure</label>
+          <label className="block text-gray-700 text-sm mb-1">小節あたりの拍数</label>
           <select
             value={timeSignature.beats}
             onChange={(e) => onChange({ ...timeSignature, beats: parseInt(e.target.value, 10) })}
@@ -52,7 +52,7 @@ const TimeSignatureSelector: React.FC<TimeSignatureSelectorProps> = ({
         </div>
         
         <div>
-          <label className="block text-gray-700 text-sm mb-1">Beat value</label>
+          <label className="block text-gray-700 text-sm mb-1">拍の単位</label>
           <select
             value={timeSignature.value}
             onChange={(e) => onChange({ ...timeSignature, value: parseInt(e.target.value, 10) })}

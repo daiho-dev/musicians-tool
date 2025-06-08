@@ -157,8 +157,8 @@ const Recorder: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-screen-md mx-auto py-4 pt-24">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Audio Recorder</h2>
-        <p className="text-gray-600">Record, play back, and save your audio</p>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">音声録音</h2>
+        <p className="text-gray-600">録音、再生、保存ができます</p>
       </div>
       
       <div className="w-full bg-white rounded-lg shadow-md p-4 mb-6">
@@ -172,7 +172,7 @@ const Recorder: React.FC = () => {
           {recordingState === 'recording' && (
             <div className="flex items-center justify-center mt-1">
               <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse mr-2"></div>
-              <span className="text-red-500 text-sm">Recording</span>
+              <span className="text-red-500 text-sm">録音中</span>
             </div>
           )}
         </div>
@@ -191,7 +191,7 @@ const Recorder: React.FC = () => {
             className="flex items-center justify-center px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors shadow-md"
           >
             <Mic className="w-5 h-5 mr-2" />
-            Start Recording
+            録音開始
           </button>
         )}
         
@@ -202,7 +202,7 @@ const Recorder: React.FC = () => {
               className="flex items-center justify-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors shadow-md"
             >
               <Pause className="w-5 h-5 mr-2" />
-              Pause
+              一時停止
             </button>
             
             <button
@@ -210,7 +210,7 @@ const Recorder: React.FC = () => {
               className="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-md"
             >
               <Square className="w-5 h-5 mr-2" />
-              Stop
+              停止
             </button>
           </>
         )}
@@ -222,7 +222,7 @@ const Recorder: React.FC = () => {
               className="flex items-center justify-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors shadow-md"
             >
               <Play className="w-5 h-5 mr-2" />
-              Resume
+              再開
             </button>
             
             <button
@@ -230,7 +230,7 @@ const Recorder: React.FC = () => {
               className="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-md"
             >
               <Square className="w-5 h-5 mr-2" />
-              Stop
+              停止
             </button>
           </>
         )}
@@ -242,7 +242,7 @@ const Recorder: React.FC = () => {
               className="flex items-center justify-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors shadow-md"
             >
               <Save className="w-5 h-5 mr-2" />
-              Save
+              保存
             </button>
             
             <button
@@ -250,7 +250,7 @@ const Recorder: React.FC = () => {
               className="flex items-center justify-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors shadow-md"
             >
               <Trash2 className="w-5 h-5 mr-2" />
-              Discard
+              削除
             </button>
           </>
         )}

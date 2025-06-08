@@ -73,7 +73,7 @@ const WaveformDisplay = forwardRef<HTMLAudioElement, WaveformDisplayProps>(
         >
           {!audioURL && !isRecording && (
             <div className="h-full flex items-center justify-center text-gray-500">
-              <p className="text-sm">No recording available</p>
+              <p className="text-sm">録音データがありません</p>
             </div>
           )}
           

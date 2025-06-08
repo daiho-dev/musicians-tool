@@ -51,7 +51,7 @@ function App() {
                   }`}
                 >
                   <Music className="w-6 h-6 mb-1" />
-                  <span>Tuner</span>
+                  <span>チューナー</span>
                 </button>
               </li>
               <li className="flex-1">
@@ -62,7 +62,7 @@ function App() {
                   }`}
                 >
                   <Clock className="w-6 h-6 mb-1" />
-                  <span>Metronome</span>
+                  <span>メトロノーム</span>
                 </button>
               </li>
               <li className="flex-1">
@@ -73,7 +73,7 @@ function App() {
                   }`}
                 >
                   <Mic className="w-6 h-6 mb-1" />
-                  <span>Recorder</span>
+                  <span>録音</span>
                 </button>
               </li>
               <li className="flex-1">
@@ -84,7 +84,7 @@ function App() {
                   }`}
                 >
                   <Guitar className="w-6 h-6 mb-1" />
-                  <span>Fretboard</span>
+                  <span>指板</span>
                 </button>
               </li>
               <li className="flex-1">
@@ -95,7 +95,7 @@ function App() {
                   }`}
                 >
                   <Music2 className="w-6 h-6 mb-1" />
-                  <span>Practice</span>
+                  <span>練習</span>
                 </button>
               </li>
             </ul>

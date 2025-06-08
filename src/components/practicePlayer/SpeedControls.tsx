@@ -19,10 +19,10 @@ const SpeedControls: React.FC<SpeedControlsProps> = ({ playbackRate, onRateChang
     <div className="w-full">
       <div className="flex justify-between items-center mb-2">
         <label className="text-sm text-gray-700 font-medium">
-          Playback Speed
+          再生速度
         </label>
         <span className="text-blue-600 font-bold">
-          {playbackRate.toFixed(2)}x
+          {playbackRate.toFixed(2)}倍
         </span>
       </div>
       
@@ -49,7 +49,7 @@ const SpeedControls: React.FC<SpeedControlsProps> = ({ playbackRate, onRateChang
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             } transition-colors`}
           >
-            {speed.toFixed(2)}x
+            {speed.toFixed(2)}倍
           </button>
         ))}
       </div>

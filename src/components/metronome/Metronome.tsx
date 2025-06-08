@@ -146,8 +146,8 @@ const Metronome: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-md mx-auto py-4 pt-24">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Metronome</h2>
-        <p className="text-gray-600">Set your tempo and time signature</p>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">メトロノーム</h2>
+        <p className="text-gray-600">テンポと拍子を設定してください</p>
       </div>
       
       <MetronomeVisual 
@@ -159,7 +159,7 @@ const Metronome: React.FC = () => {
       <div className="w-full max-w-screen-md mx-auto px-4 pt-24">
         <div className="flex justify-between items-center mb-2">
           <label htmlFor="bpm-slider" className="text-gray-700 font-medium">
-            Tempo: <span className="text-blue-600 font-bold">{bpm} BPM</span>
+            テンポ: <span className="text-blue-600 font-bold">{bpm} BPM</span>
           </label>
         </div>
         
@@ -196,12 +196,12 @@ const Metronome: React.FC = () => {
           {isPlaying ? (
             <>
               <Square className="w-5 h-5 mr-2" />
-              Stop
+              停止
             </>
           ) : (
             <>
               <Play className="w-5 h-5 mr-2" />
-              Start
+              開始
             </>
           )}
         </button>
@@ -211,7 +211,7 @@ const Metronome: React.FC = () => {
           className="flex items-center justify-center px-6 py-3 bg-gray-700 hover:bg-gray-800 text-white rounded-lg transition-colors shadow-md"
         >
           <Clock className="w-5 h-5 mr-2" />
-          Tap Tempo
+          タップテンポ
         </button>
       </div>
     </div>

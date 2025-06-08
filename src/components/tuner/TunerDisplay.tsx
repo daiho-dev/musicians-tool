@@ -12,9 +12,9 @@ const TunerDisplay: React.FC<TunerDisplayProps> = ({ note, frequency, detune }) 
   
   // Determine tuning status and colors
   const getTuningStatus = () => {
-    if (Math.abs(detune) < 5) return { text: 'In Tune', color: 'text-green-500' };
-    if (detune > 0) return { text: 'Too High', color: 'text-red-500' };
-    return { text: 'Too Low', color: 'text-red-500' };
+    if (Math.abs(detune) < 5) return { text: '正確', color: 'text-green-500' };
+    if (detune > 0) return { text: '高すぎ', color: 'text-red-500' };
+    return { text: '低すぎ', color: 'text-red-500' };
   };
 
   const status = getTuningStatus();
@@ -73,7 +73,7 @@ const TunerDisplay: React.FC<TunerDisplayProps> = ({ note, frequency, detune }) 
             {status.text}
           </div>
           <div className="text-gray-400 text-sm mt-1">
-            {detune > 0 ? `+${detune}` : detune} cents
+            {detune > 0 ? `+${detune}` : detune} セント
           </div>
         </div>
       </div>
