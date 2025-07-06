@@ -14,6 +14,7 @@ const Metronome: React.FC = () => {
   const nextNoteTime = useRef<number>(0);
   const timerID = useRef<number | null>(null);
   const lastTapTime = useRef<number | null>(null);
+  const currentBeatInMeasureRef = useRef<number>(0);
 
   // Initialize audio context on component mount
   useEffect(() => {
@@ -26,13 +27,13 @@ const Metronome: React.FC = () => {
   }, []);
 
   // Schedule metronome notes
-  const scheduleNote = (time: number) => {
+  const scheduleNote = (time: number, beatIndex: number) => {
     // Create oscillator
     const osc = audioContext.current!.createOscillator();
     const envelope = audioContext.current!.createGain();
     
     // Set properties based on beat (first beat is accented)
-    if (count % timeSignature.beats === 0) {
+    if (beatIndex === 0) {
       osc.frequency.value = 800; // Higher frequency for first beat
       envelope.gain.value = 0.6;
     } else {
@@ -47,9 +48,6 @@ const Metronome: React.FC = () => {
     envelope.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
     osc.start(time);
     osc.stop(time + 0.1);
-    
-    // Update beat counter
-    setCount((prevCount) => (prevCount + 1) % timeSignature.beats);
   };
 
   // Scheduler function that runs periodically
@@ -58,7 +56,14 @@ const Metronome: React.FC = () => {
     const scheduleAheadTime = 0.1; // How far ahead to schedule notes
     
     while (nextNoteTime.current < audioContext.current!.currentTime + scheduleAheadTime) {
-      scheduleNote(nextNoteTime.current);
+      // Schedule the note with the current beat index
+      scheduleNote(nextNoteTime.current, currentBeatInMeasureRef.current);
+      
+      // Update beat counter synchronously
+      currentBeatInMeasureRef.current = (currentBeatInMeasureRef.current + 1) % timeSignature.beats;
+      
+      // Update visual display to match the audio timing
+      setCount(currentBeatInMeasureRef.current);
       
       // Calculate next note time
       const secondsPerBeat = 60.0 / bpm;
@@ -83,6 +88,8 @@ const Metronome: React.FC = () => {
         audioContext.current!.resume();
       }
       
+      // Reset beat counters
+      currentBeatInMeasureRef.current = 0;
       setCount(0);
       nextNoteTime.current = audioContext.current!.currentTime;
       scheduler();
