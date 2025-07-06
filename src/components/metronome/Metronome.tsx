@@ -59,11 +59,11 @@ const Metronome: React.FC = () => {
       // Schedule the note with the current beat index
       scheduleNote(nextNoteTime.current, currentBeatInMeasureRef.current);
       
-      // Update beat counter synchronously
-      currentBeatInMeasureRef.current = (currentBeatInMeasureRef.current + 1) % timeSignature.beats;
-      
       // Update visual display to match the audio timing
       setCount(currentBeatInMeasureRef.current);
+      
+      // Update beat counter for next iteration
+      currentBeatInMeasureRef.current = (currentBeatInMeasureRef.current + 1) % timeSignature.beats;
       
       // Calculate next note time
       const secondsPerBeat = 60.0 / bpm;
