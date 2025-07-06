@@ -11,11 +11,13 @@ const Recorder: React.FC = () => {
   const [recordingTime, setRecordingTime] = useState<number>(0);
   const [audioURL, setAudioURL] = useState<string | null>(null);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [error, setError] = useState<string | null>(null);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const timerIntervalRef = useRef<number | null>(null);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   
   // Format recording time as mm:ss
   const formatTime = (timeInSeconds: number): string => {
@@ -27,38 +29,78 @@ const Recorder: React.FC = () => {
   // Start recording
   const startRecording = async () => {
     try {
-      if (!isAudioInitialized) {
-        await startAudio();
+      setError(null);
+      
+      // Request microphone access with specific constraints
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false,
+          sampleRate: 44100
+        } 
+      });
+      
+      streamRef.current = stream;
+      
+      // Check if MediaRecorder is supported
+      if (!MediaRecorder.isTypeSupported('audio/webm')) {
+        console.warn('audio/webm not supported, falling back to default');
       }
       
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorderRef.current = new MediaRecorder(stream);
+      // Create MediaRecorder with appropriate options
+      const options = MediaRecorder.isTypeSupported('audio/webm') 
+        ? { mimeType: 'audio/webm' }
+        : {};
       
+      mediaRecorderRef.current = new MediaRecorder(stream, options);
+      
+      // Reset audio chunks
       audioChunksRef.current = [];
       
+      // Set up event handlers
       mediaRecorderRef.current.ondataavailable = (event) => {
+        console.log('Data available:', event.data.size);
         if (event.data.size > 0) {
           audioChunksRef.current.push(event.data);
         }
       };
       
       mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-        const url = URL.createObjectURL(audioBlob);
-        setAudioURL(url);
-        setAudioBlob(audioBlob);
+        console.log('Recording stopped, chunks:', audioChunksRef.current.length);
+        if (audioChunksRef.current.length > 0) {
+          const mimeType = mediaRecorderRef.current?.mimeType || 'audio/webm';
+          const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+          const url = URL.createObjectURL(audioBlob);
+          setAudioURL(url);
+          setAudioBlob(audioBlob);
+          console.log('Audio blob created:', audioBlob.size, 'bytes');
+        }
       };
       
-      mediaRecorderRef.current.start();
-      setRecordingState('recording');
+      mediaRecorderRef.current.onerror = (event) => {
+        console.error('MediaRecorder error:', event);
+        setError('録音中にエラーが発生しました');
+        setRecordingState('inactive');
+      };
       
-      // Start timer
-      timerIntervalRef.current = window.setInterval(() => {
-        setRecordingTime((prevTime) => prevTime + 1);
-      }, 1000);
+      mediaRecorderRef.current.onstart = () => {
+        console.log('Recording started');
+        setRecordingState('recording');
+        
+        // Start timer
+        timerIntervalRef.current = window.setInterval(() => {
+          setRecordingTime((prevTime) => prevTime + 1);
+        }, 1000);
+      };
+      
+      // Start recording with timeslice for regular data events
+      mediaRecorderRef.current.start(100); // Request data every 100ms
+      
     } catch (error) {
       console.error('Error starting recording:', error);
-      alert('マイクのアクセスが許可されていない可能性があります。ブラウザ設定をご確認ください。');
+      setError('マイクのアクセスが許可されていない可能性があります。ブラウザ設定をご確認ください。');
+      setRecordingState('inactive');
     }
   };
   
@@ -95,7 +137,10 @@ const Recorder: React.FC = () => {
       mediaRecorderRef.current.stop();
       
       // Stop media tracks
-      mediaRecorderRef.current.stream.getTracks().forEach((track) => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
       
       setRecordingState('stopped');
       
@@ -109,10 +154,16 @@ const Recorder: React.FC = () => {
   
   // Reset recording
   const resetRecording = () => {
+    // Clean up previous audio URL
+    if (audioURL) {
+      URL.revokeObjectURL(audioURL);
+    }
+    
     setRecordingState('inactive');
     setRecordingTime(0);
     setAudioURL(null);
     setAudioBlob(null);
+    setError(null);
     audioChunksRef.current = [];
     
     // Stop any playing audio
@@ -125,7 +176,7 @@ const Recorder: React.FC = () => {
   // Save recording
   const saveRecording = () => {
     if (audioBlob) {
-      const fileName = `recording_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.wav`;
+      const fileName = `recording_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
       const url = URL.createObjectURL(audioBlob);
       
       const a = document.createElement('a');
@@ -148,11 +199,15 @@ const Recorder: React.FC = () => {
         clearInterval(timerIntervalRef.current);
       }
       
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+      
       if (audioURL) {
         URL.revokeObjectURL(audioURL);
       }
     };
-  }, [audioURL]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-screen-md mx-auto py-4 pt-4">
@@ -160,6 +215,13 @@ const Recorder: React.FC = () => {
         <h2 className="text-2xl font-bold text-gray-800 mb-2">音声録音</h2>
         <p className="text-gray-600">録音、再生、保存ができます</p>
       </div>
+      
+      {/* Error display */}
+      {error && (
+        <div className="w-full bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+          <p className="text-red-700 text-sm">{error}</p>
+        </div>
+      )}
       
       <div className="w-full bg-white rounded-lg shadow-md p-4 mb-6">
         <div className="text-center mb-2">
@@ -173,6 +235,13 @@ const Recorder: React.FC = () => {
             <div className="flex items-center justify-center mt-1">
               <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse mr-2"></div>
               <span className="text-red-500 text-sm">録音中</span>
+            </div>
+          )}
+          
+          {recordingState === 'paused' && (
+            <div className="flex items-center justify-center mt-1">
+              <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+              <span className="text-yellow-600 text-sm">一時停止中</span>
             </div>
           )}
         </div>
@@ -255,6 +324,15 @@ const Recorder: React.FC = () => {
           </>
         )}
       </div>
+      
+      {/* Debug info (remove in production) */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="w-full mt-4 p-2 bg-gray-100 rounded text-xs text-gray-600">
+          <p>状態: {recordingState}</p>
+          <p>チャンク数: {audioChunksRef.current.length}</p>
+          {audioBlob && <p>ファイルサイズ: {audioBlob.size} bytes</p>}
+        </div>
+      )}
     </div>
   );
 };
