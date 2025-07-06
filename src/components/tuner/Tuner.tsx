@@ -3,10 +3,10 @@ import { useAudioContext } from '../../context/AudioContextProvider';
 import TunerDisplay from './TunerDisplay';
 import GuitarStrings from './GuitarStrings';
 import { PitchDetector  } from 'pitchy';
-import { Mic, MicOff } from 'lucide-react';
+import { Mic, MicOff, AlertCircle } from 'lucide-react';
 
 const Tuner: React.FC = () => {
-  const { audioContext, analyser, startAudio, isAudioInitialized } = useAudioContext();
+  const { audioContext, analyser, startAudio, isAudioInitialized, audioError } = useAudioContext();
   const [isListening, setIsListening] = useState(false);
   const [currentNote, setCurrentNote] = useState<string>('-');
   const [currentFrequency, setCurrentFrequency] = useState<number | null>(null);
@@ -139,27 +139,41 @@ const Tuner: React.FC = () => {
         <h2 className="text-xl font-bold text-gray-800 mb-1">ギターチューナー</h2>
         <p className="text-sm text-gray-600">楽器を標準的なギターチューニングに合わせましょう</p>
       </div>
-    <div className="mb-4">
-      <TunerDisplay 
-        note={currentNote} 
-        frequency={currentFrequency} 
-        detune={detuneAmount} 
-      />
-    </div>
-    <div className="mb-4">
-      <GuitarStrings 
-        onSelectString={handleStringSelect} 
-        selectedString={selectedString}
-      />
-    </div>
+
+      {/* Error message display */}
+      {audioError && (
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="flex items-center">
+            <AlertCircle className="w-5 h-5 text-red-500 mr-2 flex-shrink-0" />
+            <p className="text-red-700 text-sm">{audioError}</p>
+          </div>
+        </div>
+      )}
+
+      <div className="mb-4">
+        <TunerDisplay 
+          note={currentNote} 
+          frequency={currentFrequency} 
+          detune={detuneAmount} 
+        />
+      </div>
+      <div className="mb-4">
+        <GuitarStrings 
+          onSelectString={handleStringSelect} 
+          selectedString={selectedString}
+        />
+      </div>
       <div className="mt-8">
         <button
           onClick={toggleListening}
-          className={`flex items-center justify-center px-6 py-3 rounded-full ${
-            isListening 
-              ? 'bg-red-500 hover:bg-red-600 text-white' 
-              : 'bg-blue-600 hover:bg-blue-700 text-white'
-          } transition-colors shadow-md`}
+          disabled={audioError !== null && !isListening}
+          className={`flex items-center justify-center px-6 py-3 rounded-full transition-colors shadow-md ${
+            audioError !== null && !isListening
+              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+              : isListening 
+                ? 'bg-red-500 hover:bg-red-600 text-white' 
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
+          }`}
         >
           {isListening ? (
             <>

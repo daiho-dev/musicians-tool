@@ -11,6 +11,7 @@ interface AudioContextType {
   startAudio: () => Promise<void>;
   stopAudio: () => void;
   isAudioInitialized: boolean;
+  audioError: string | null;
 }
 
 const AudioContext = createContext<AudioContextType>({
@@ -19,7 +20,8 @@ const AudioContext = createContext<AudioContextType>({
   inputStream: null,
   startAudio: async () => {},
   stopAudio: () => {},
-  isAudioInitialized: false
+  isAudioInitialized: false,
+  audioError: null
 });
 
 export const useAudioContext = () => useContext(AudioContext);
@@ -29,10 +31,13 @@ export const AudioContextProvider: React.FC<AudioContextProviderProps> = ({ chil
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
   const inputStreamRef = useRef<MediaStream | null>(null);
   const [isAudioInitialized, setIsAudioInitialized] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
 
 const startAudio = async () => {
   try {
     console.log('[startAudio] 開始');
+    setAudioError(null); // Clear any previous errors
+    
     // Request microphone access
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     inputStreamRef.current = stream;
@@ -52,6 +57,22 @@ const startAudio = async () => {
       setIsAudioInitialized(true);
   } catch (error) {
     console.error('Error initializing audio:', error);
+    setIsAudioInitialized(false);
+    
+    // Handle specific error types with user-friendly messages
+    if (error instanceof Error) {
+      if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
+        setAudioError('マイクが見つかりません。マイクが接続されているか確認してください。');
+      } else if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+        setAudioError('マイクへのアクセスが拒否されました。ブラウザの設定でマイクの使用を許可してください。');
+      } else if (error.name === 'NotSupportedError') {
+        setAudioError('お使いのブラウザはマイク機能をサポートしていません。');
+      } else {
+        setAudioError('オーディオの初期化中にエラーが発生しました。ページを再読み込みして再試行してください。');
+      }
+    } else {
+      setAudioError('不明なエラーが発生しました。');
+    }
   }
 };
 
@@ -67,6 +88,8 @@ const startAudio = async () => {
       setAnalyser(null);
       setIsAudioInitialized(false);
     }
+    
+    setAudioError(null); // Clear error when stopping audio
   };
 
   // Clean up audio on unmount
@@ -84,7 +107,8 @@ const startAudio = async () => {
         inputStream: inputStreamRef.current,
         startAudio,
         stopAudio,
-        isAudioInitialized
+        isAudioInitialized,
+        audioError
       }}
     >
       {children}
