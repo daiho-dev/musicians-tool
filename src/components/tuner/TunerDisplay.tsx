@@ -20,9 +20,9 @@ const TunerDisplay: React.FC<TunerDisplayProps> = ({ note, frequency, detune }) 
   const status = getTuningStatus();
 
   return (
-    <div className="w-full max-w-screen-lg px-6 mx-auto">
+    <div className="w-full max-w-2xl px-6 mx-auto">
       {/* Main display card */}
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-4xl mx-auto">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-8 w-full mx-auto">
         {/* Note display */}
         <div className="text-center mb-8">
           <div className="text-7xl md:text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
