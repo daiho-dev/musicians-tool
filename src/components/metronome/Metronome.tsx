@@ -151,7 +151,7 @@ const Metronome: React.FC = () => {
   }, [tapTimes]);
 
   return (
-    <div className="flex flex-col items-center justify-start w-full max-w-lg mx-auto py-4 pt-4 px-4">
+    <div className="flex flex-col items-center justify-start w-full max-w-md mx-auto py-4 pt-4 px-4">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">メトロノーム</h2>
         <p className="text-gray-600">テンポと拍子を設定してください</p>

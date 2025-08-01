@@ -134,7 +134,7 @@ const Tuner: React.FC = () => {
   }, [isListening, analyser]);
 
   return (
-    <div className="flex flex-col justify-start w-full max-w-2xl mx-auto px-6 pt-4">
+    <div className="flex flex-col justify-start w-full max-w-lg mx-auto px-4 pt-4">
       <div className="text-center mb-4">
         <h2 className="text-xl font-bold text-gray-800 mb-1">ギターチューナー</h2>
         <p className="text-sm text-gray-600">楽器を標準的なギターチューニングに合わせましょう</p>
