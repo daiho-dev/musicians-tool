@@ -17,7 +17,7 @@ const TimeSignatureSelector: React.FC<TimeSignatureSelectorProps> = ({
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-md mx-auto">
       <label className="block text-gray-700 font-medium mb-2">拍子記号</label>
       <div className="grid grid-cols-4 gap-2">
         {commonSignatures.map((sig) => (
